@@ -1,0 +1,24 @@
+package com.zup.lucasciscar.cartaotransacao.kafka;
+
+import com.zup.lucasciscar.cartaotransacao.dto.TransacaoEventResponse;
+import com.zup.lucasciscar.cartaotransacao.model.Transacao;
+import com.zup.lucasciscar.cartaotransacao.repository.TransacaoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
+
+@Component
+public class TransacaoListener {
+
+    @Autowired
+    private TransacaoRepository transacaoRepository;
+
+    @KafkaListener(topics = "${spring.kafka.topic.transactions}")
+    @Transactional
+    public void listen(TransacaoEventResponse transacaoEventResponse) {
+        Transacao transacao = transacaoEventResponse.toModel();
+        transacaoRepository.save(transacao);
+    }
+}

@@ -1,0 +1,46 @@
+package com.zup.lucasciscar.cartaotransacao.dto;
+
+import com.zup.lucasciscar.cartaotransacao.model.Cartao;
+import com.zup.lucasciscar.cartaotransacao.model.Estabelecimento;
+import com.zup.lucasciscar.cartaotransacao.model.Transacao;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public class TransacaoEventResponse {
+
+    private String id;
+    private BigDecimal valor;
+    private EstabelecimentoEventResponse estabelecimento;
+    private CartaoEventResponse cartao;
+    private LocalDateTime efetivadaEm;
+
+    public TransacaoEventResponse() {}
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public void setEstabelecimento(EstabelecimentoEventResponse estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
+
+    public void setCartao(CartaoEventResponse cartao) {
+        this.cartao = cartao;
+    }
+
+    public void setEfetivadaEm(LocalDateTime efetivadaEm) {
+        this.efetivadaEm = efetivadaEm;
+    }
+
+    public Transacao toModel() {
+        Estabelecimento estabelecimento = this.estabelecimento.toModel();
+        Cartao cartao = this.cartao.toModel();
+
+        return new Transacao(id, valor, estabelecimento, cartao, efetivadaEm);
+    }
+}
