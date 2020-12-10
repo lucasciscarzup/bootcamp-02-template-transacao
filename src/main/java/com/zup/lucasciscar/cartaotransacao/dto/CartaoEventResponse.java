@@ -20,4 +20,8 @@ public class CartaoEventResponse {
     public Cartao toModel() {
         return new Cartao(id, email);
     }
+
+    public String getId() {
+        return id;
+    }
 }

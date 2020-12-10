@@ -37,9 +37,12 @@ public class TransacaoEventResponse {
         this.efetivadaEm = efetivadaEm;
     }
 
-    public Transacao toModel() {
+    public CartaoEventResponse getCartao() {
+        return cartao;
+    }
+
+    public Transacao toModel(Cartao cartao) {
         Estabelecimento estabelecimento = this.estabelecimento.toModel();
-        Cartao cartao = this.cartao.toModel();
 
         return new Transacao(id, valor, estabelecimento, cartao, efetivadaEm);
     }

@@ -1,6 +1,7 @@
 package com.zup.lucasciscar.cartaotransacao.model;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -25,7 +26,8 @@ public class Transacao {
     @Embedded
     private Estabelecimento estabelecimento;
     @NotNull
-    @Embedded
+    @Valid
+    @ManyToOne
     private Cartao cartao;
     @NotNull
     @Past
@@ -35,12 +37,28 @@ public class Transacao {
     public Transacao() {}
 
     public Transacao(@NotBlank String idLegado, @NotNull @Positive BigDecimal valor,
-                     @NotNull Estabelecimento estabelecimento, @NotNull Cartao cartao,
+                     @NotNull Estabelecimento estabelecimento, @NotNull @Valid Cartao cartao,
                      @NotNull @Past LocalDateTime efetivadaEm) {
         this.idLegado = idLegado;
         this.valor = valor;
         this.estabelecimento = estabelecimento;
         this.cartao = cartao;
         this.efetivadaEm = efetivadaEm;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public Estabelecimento getEstabelecimento() {
+        return estabelecimento;
+    }
+
+    public Cartao getCartao() {
+        return cartao;
+    }
+
+    public LocalDateTime getEfetivadaEm() {
+        return efetivadaEm;
     }
 }
